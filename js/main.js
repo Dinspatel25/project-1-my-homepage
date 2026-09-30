@@ -4,6 +4,14 @@ const navLinks = document.querySelector("#nav-links");
 if (menuButton && navLinks) {
   menuButton.addEventListener("click", () => {
     navLinks.classList.toggle("show");
+
+    const isExpanded = navLinks.classList.contains("show");
+
+    menuButton.setAttribute("aria-expanded", String(isExpanded));
+    menuButton.setAttribute(
+      "aria-label",
+      isExpanded ? "Close navigation menu" : "Open navigation menu"
+    );
   });
 }
 
@@ -40,8 +48,10 @@ const navItems = document.querySelectorAll(".nav-links a");
 
 navItems.forEach((item) => {
   item.addEventListener("click", () => {
-    if (navLinks) {
+    if (navLinks && menuButton) {
       navLinks.classList.remove("show");
+      menuButton.setAttribute("aria-expanded", "false");
+      menuButton.setAttribute("aria-label", "Open navigation menu");
     }
   });
 });
